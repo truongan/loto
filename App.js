@@ -46,11 +46,8 @@ const Cell = (props) =>{
 
 
 const Row = (props) => {
-  // const [highlighted_count,set_highlighted_count] = useState(0);
   var highlighted_count = 0;
   var increase_highlighted = () => {
-    // var a = highlighted_count + 1;
-    // set_highlighted_count(a);
     highlighted_count += 1;
     if (highlighted_count == 5){
       console.log("KINH KINH KINH");
@@ -58,21 +55,17 @@ const Row = (props) => {
     console.log(highlighted_count);
   }
 
-  var arr = props.nums;
+  var arr = [...props.nums];
   arr.push(...[0,0,0,0]);
   shuffleArray(arr);
-  shuffleArray(arr);
-  var r = [];
-
-  arr.forEach((element, index)  =>   {
-    r.push(
+  var r = arr.map( (element, index) =>
       <Cell 
-        key={props.nums + " " + index} 
-        num = {element} 
-        increase_highlighted={increase_highlighted} 
+      key={props.nums + " " + index} 
+      num = {element} 
+      increase_highlighted={increase_highlighted} 
       ></Cell>
-    );
-  });
+      );
+  console.log(r);
   // console.log(r);
   return   <View style={{flexDirection : "row", flexGrow: 1, width:"100%"}}>
       {r}
@@ -89,7 +82,7 @@ const YourApp = () => {
   for(let i = 0; i < 45; i+=5){
     b.push(a.slice(i, i+5));
   } 
-  console.log(b);
+  // console.log(b);
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Modal
@@ -119,11 +112,9 @@ const YourApp = () => {
       </Text>
       
       {
-        b.map(e=><Row nums={e} setModalVisible={setModalVisible}></Row>)
+        b.map(e=><Row key = {e} nums={e} setModalVisible={setModalVisible}></Row>)
       }
-      {/* <Row nums={[1,2,3,4,5]}></Row> 
-      <Row nums={[1,2,3,4,5]}></Row> 
-      <Row nums={[1,2,3,4,5]}></Row>  */} 
+
       
     </View>
   );
