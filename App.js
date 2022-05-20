@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import {StyleSheet, Text, View, TouchableOpacity , Modal, Pressable} from 'react-native';
+import { Button } from 'react-native-web';
 
 
 function generate_board(){
@@ -60,35 +61,6 @@ function generate_board(){
 }
 
 
-const AdjustLabel = ({
-  text, style, numberOfLines
-}) => {
-  const [currentFont, setCurrentFont] = useState(90);
-
-  return (
-    <Text
-      numberOfLines={ numberOfLines }
-      // numberOfLines={6}
-    
-      adjustsFontSizeToFit
-      style={ [style, { fontSize: currentFont }] }
-      onTextLayout={ (e) => {
-        console.log(e.nativeEvent);
-        // console.log("shit");
-        console.log("shit");
-        console.log("shit");
-        const { lines } = e.nativeEvent;
-        if (lines.length > numberOfLines) {
-          setCurrentFont(currentFont - 1);
-        }
-      } }
-    >
-      { text }
-      {/* { fontSize } */}
-    </Text>
-  );
-};
-
 const Cell = (props) =>{
   const [highlight,set_highlight] = useState(false);
   return  <TouchableOpacity
@@ -109,7 +81,7 @@ const Cell = (props) =>{
       }
     }
   > 
-    {/* <Text 
+    <Text 
       adjustsFontSizeToFit
       allowFontScaling
       style = { {
@@ -118,18 +90,7 @@ const Cell = (props) =>{
       } }
     >
       {props.num == 0 ? "" : props.num}
-    </Text> */}
-
-    <AdjustLabel 
-      text = {props.num == 0 ? "" : props.num}
-      numberOfLines = {1}
-      style = { {
-        // fontSize:50,
-        color: highlight ? "#FF0000" : "#000"
-      } }
-    >
-
-    </AdjustLabel>
+    </Text>
   </TouchableOpacity>
 
 }
@@ -152,8 +113,6 @@ const Row = (props) => {
       increase_highlighted={increase_highlighted} 
       ></Cell>
       );
-  // console.log(r);
-  // console.log(r);
   return   <View style={{flexDirection : "row", flexGrow: 1, width:"100%"}}>
       {r}
   </View>;
@@ -164,22 +123,6 @@ const YourApp = () => {
 
   const [board, setboard] = useState(generate_board());
 
-  // var a2d = [...Array(9)].map(x => Array(9).fill(0));
-  // var cells = []
-  // a2d.forEach((e,i)=>{e.forEach((x,j)=>{cells.push([i,j])})});
-  // console.log("start");
-  // console.log(cells);
-
-
-  // var a=[], b =[]
-  // for (let i = 1; i < 91  ; i++) {
-  //   a.push(i)
-  // }
-  // shuffleArray(a);
-  // for(let i = 0; i < 45; i+=5){
-  //   b.push(a.slice(i, i+5));
-  // } 
-  // console.log(b);
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Modal
@@ -204,9 +147,11 @@ const YourApp = () => {
         </View>
       </Modal>
 
-      <Text>
-        Try editing me! 🎉 
-      </Text>
+      <Button
+        onClick = {setboard(generate_board())}
+      >
+        NEW GAME
+      </Button>
       
       {
         board.map(e=><Row key = {e} nums={e} setModalVisible={setModalVisible}></Row>)
